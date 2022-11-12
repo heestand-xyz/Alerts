@@ -19,3 +19,9 @@ extension Alerts {
         }
     }
 }
+
+extension Alerts.Button {
+    
+    public static let ok = Alerts.Button(title: "Ok", role: .cancel)
+    public static let cancel = Alerts.Button(title: "Cancel", role: .cancel)
+}

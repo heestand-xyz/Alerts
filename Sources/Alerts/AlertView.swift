@@ -1,11 +1,12 @@
 import SwiftUI
 
-struct AlertView: View {
+struct AlertView<Content: View>: View {
     
     @ObservedObject var alerts: Alerts
+    let content: () -> Content
     
     var body: some View {
-        EmptyView()
+        content()
             .alert(alerts.title,
                    isPresented: alerts.isPresented,
                    presenting: alerts.alert) { alert in
