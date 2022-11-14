@@ -24,6 +24,8 @@ public final class Alerts: ObservableObject {
 extension Alerts {
     
     public func alert(_ alert: Alerts.Alert) {
-        self.alert = alert
+        DispatchQueue.main.async {
+            self.alert = alert
+        }
     }
 }
