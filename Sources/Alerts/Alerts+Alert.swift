@@ -30,6 +30,8 @@ extension Alerts.Alert {
             return message
         case .error(_, let error):
             return error.localizedDescription
+            + "\n" + ((error as NSError).localizedFailureReason ?? "")
+            + "\n" + "Error Code \((error as NSError).code)"
         }
     }
     
