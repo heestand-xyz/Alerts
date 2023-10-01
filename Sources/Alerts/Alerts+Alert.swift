@@ -29,9 +29,9 @@ extension Alerts.Alert {
         case .warning(_, let message):
             return message
         case .error(_, let error):
-            return error.localizedDescription
+            return Alerts.overrideFailureMessage?(error) ?? (error.localizedDescription
             + "\n" + ((error as NSError).localizedFailureReason ?? "")
-            + "\n" + "Error Code \((error as NSError).code)"
+            + "\n" + "Error Code \((error as NSError).code)")
         }
     }
     
@@ -39,8 +39,10 @@ extension Alerts.Alert {
         switch self {
         case .info(_, _, let buttons):
             return buttons
-        case .warning, .error:
-            return [.ok]
+        case .warning:
+            return [Alerts.warningButton]
+        case .error:
+            return [Alerts.errorButton]
         }
     }
 }

@@ -22,6 +22,7 @@ extension Alerts {
 
 extension Alerts.Button {
     
-    public static let ok = Alerts.Button(title: "Ok", role: .cancel)
-    public static let cancel = Alerts.Button(title: "Cancel", role: .cancel)
+    public static let ok = Alerts.Button(title: Alerts.okButtonTitle, role: .cancel)
+    public static let cancel = Alerts.Button(title: Alerts.cancelButtonTitle, role: .cancel)
+    public static let dismiss = Alerts.Button(title: Alerts.dismissButtonTitle, role: .cancel)
 }
