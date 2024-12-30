@@ -8,12 +8,12 @@ extension Alerts {
         
         let title: String
         let role: ButtonRole?
-        let action: (@Sendable () -> Void)?
+        let action: (@MainActor () -> Void)?
         
         public init(
             title: String,
             role: ButtonRole? = nil,
-            action: (@Sendable () -> Void)? = nil
+            action: (@MainActor () -> Void)? = nil
         ) {
             self.title = title
             self.role = role
