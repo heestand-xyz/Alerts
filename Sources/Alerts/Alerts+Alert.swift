@@ -2,13 +2,15 @@ import SwiftUI
 
 extension Alerts {
     
-    public enum Alert {
+    public enum Alert: Sendable {
         case info(title: String, message: String?, buttons: [Button])
+        @available(*, deprecated, renamed: "info")
         case warning(title: String, message: String?)
         case error(title: String, error: Error)
     }
 }
 
+@MainActor
 extension Alerts.Alert {
     
     var title: String {
@@ -29,9 +31,13 @@ extension Alerts.Alert {
         case .warning(_, let message):
             return message
         case .error(_, let error):
-            return Alerts.overrideFailureMessage?(error) ?? (error.localizedDescription
-            + "\n" + ((error as NSError).localizedFailureReason ?? "")
-            + "\n" + "Error Code \((error as NSError).code)")
+            return Alerts.overrideFailureMessage?(error) ?? (
+                """
+                \(error.localizedDescription)
+                \((error as NSError).localizedFailureReason ?? "")
+                Error code: \((error as NSError).code)
+                """
+            )
         }
     }
     

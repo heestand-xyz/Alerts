@@ -2,14 +2,16 @@ import SwiftUI
 
 struct AlertView<Content: View>: View {
     
-    @ObservedObject var alerts: Alerts
+    let alerts: Alerts
     let content: () -> Content
     
     var body: some View {
         content()
-            .alert(alerts.title,
-                   isPresented: alerts.isPresented,
-                   presenting: alerts.alert) { alert in
+            .alert(
+                alerts.title,
+                isPresented: alerts.isPresented,
+                presenting: alerts.alert
+            ) { alert in
                 ForEach(alert.buttons) { button in
                     Button(role: button.role) {
                         button.action?()

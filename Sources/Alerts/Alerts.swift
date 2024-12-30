@@ -1,7 +1,9 @@
 import Foundation
 import SwiftUI
 
-public final class Alerts: ObservableObject {
+@MainActor
+@Observable
+public final class Alerts: Sendable {
    
     public static var warningButton: Alerts.Button = .ok
     public static var errorButton: Alerts.Button = .ok
@@ -12,7 +14,7 @@ public final class Alerts: ObservableObject {
     
     public static var overrideFailureMessage: ((Error) -> String)?
     
-    @Published var alert: Alert?
+    var alert: Alert?
     
     var title: String {
         alert?.title ?? ""
@@ -33,8 +35,6 @@ public final class Alerts: ObservableObject {
 extension Alerts {
     
     public func alert(_ alert: Alerts.Alert) {
-        DispatchQueue.main.async {
-            self.alert = alert
-        }
+        self.alert = alert
     }
 }

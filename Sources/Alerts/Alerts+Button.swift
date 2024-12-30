@@ -2,17 +2,19 @@ import SwiftUI
 
 extension Alerts {
     
-    public struct Button: Identifiable {
+    public struct Button: Identifiable, Sendable {
         
         public var id: String { title }
         
         let title: String
         let role: ButtonRole?
-        let action: (() -> Void)?
+        let action: (@Sendable () -> Void)?
         
-        public init(title: String,
-                    role: ButtonRole? = nil,
-                    action: (() -> Void)? = nil) {
+        public init(
+            title: String,
+            role: ButtonRole? = nil,
+            action: (@Sendable () -> Void)? = nil
+        ) {
             self.title = title
             self.role = role
             self.action = action
@@ -20,6 +22,7 @@ extension Alerts {
     }
 }
 
+@MainActor
 extension Alerts.Button {
     
     public static let ok = Alerts.Button(title: Alerts.okButtonTitle, role: .cancel)
