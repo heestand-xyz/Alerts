@@ -37,4 +37,18 @@ extension Alerts {
     public func alert(_ alert: Alerts.Alert) {
         self.alert = alert
     }
+    
+    @discardableResult
+    public func alert(title: String, message: String? = nil, buttons: [ButtonInfo] = [.ok]) async -> ButtonInfo {
+        await withCheckedContinuation { continuation in
+            var actionButtons: [Button] = []
+            for button in buttons {
+                let actionButton: Button = button.button {
+                    continuation.resume(returning: button)
+                }
+                actionButtons.append(actionButton)
+            }
+            self.alert = .info(title: title, message: message, buttons: actionButtons)
+        }
+    }
 }
