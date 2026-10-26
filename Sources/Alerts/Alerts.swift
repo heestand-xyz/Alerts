@@ -15,17 +15,20 @@ public final class Alerts: Sendable {
     public static var overrideFailureMessage: ((Error) -> String)?
     
     var alert: Alert?
+    @ObservationIgnored var presentationID: UUID?
+    @ObservationIgnored var pendingCancellableAlert: PendingCancellableAlert?
     
     var title: String {
         alert?.title ?? ""
     }
     
     var isPresented: Binding<Bool> {
-        Binding { [weak self] in
+        let presentationID: UUID? = presentationID
+        return Binding { [weak self] in
             self?.alert != nil
         } set: { [weak self] isPresented in
             guard !isPresented else { return }
-            self?.alert = nil
+            self?.dismissAlert(id: presentationID)
         }
     }
     
@@ -35,7 +38,7 @@ public final class Alerts: Sendable {
 extension Alerts {
     
     public func alert(_ alert: Alerts.Alert) {
-        self.alert = alert
+        present(alert, id: UUID())
     }
     
     @discardableResult
@@ -48,7 +51,7 @@ extension Alerts {
                 }
                 actionButtons.append(actionButton)
             }
-            self.alert = .info(title: title, message: message, buttons: actionButtons)
+            self.alert(.info(title: title, message: message, buttons: actionButtons))
         }
     }
 }

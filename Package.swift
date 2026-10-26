@@ -18,5 +18,8 @@ let package = Package(
         .target(
             name: "Alerts",
             dependencies: []),
+        .testTarget(
+            name: "AlertsTests",
+            dependencies: ["Alerts"]),
     ]
 )
