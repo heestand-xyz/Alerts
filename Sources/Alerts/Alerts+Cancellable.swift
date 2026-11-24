@@ -7,6 +7,19 @@ extension Alerts {
         let continuation: CheckedContinuation<ButtonInfo?, Never>
     }
 
+    /// Returns nil when the task is canceled or the alert is dismissed or replaced.
+    public func optionalCancellableAlert(
+        title: String,
+        message: String? = nil,
+        buttons: [ButtonInfo] = [.ok]
+    ) async -> ButtonInfo? {
+        do {
+            return try await cancellableAlert(title: title, message: message, buttons: buttons)
+        } catch {
+            return nil
+        }
+    }
+
     /// Throws when the task is canceled or the alert is dismissed or replaced.
     @discardableResult
     public func cancellableAlert(
